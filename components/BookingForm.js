@@ -63,10 +63,12 @@ export function BookingForm({ compact = false }) {
     }
   }
 
+  const inputClass = "focus-ring mt-1.5 w-full rounded-xl border border-ink/15 bg-white px-3.5 py-3 text-sm text-ink shadow-sm";
+
   return (
-    <form onSubmit={submit} className={`rounded border border-ink/10 bg-white p-5 shadow-sm ${compact ? "" : "lg:p-7"}`}>
+    <form onSubmit={submit} className={`rounded-2xl border border-ink/10 bg-white p-5 shadow-soft ${compact ? "" : "lg:p-7"}`}>
       <div className="mb-5 flex items-center gap-3">
-        <span className="grid h-10 w-10 place-items-center rounded bg-mint text-clinic">
+        <span className="grid h-11 w-11 place-items-center rounded-xl bg-mint text-clinic">
           <CalendarCheck size={20} />
         </span>
         <div>
@@ -77,7 +79,7 @@ export function BookingForm({ compact = false }) {
       <div className="grid gap-4 sm:grid-cols-2">
         <label className="text-sm font-medium">
           Service
-          <select className="focus-ring mt-1 w-full rounded border border-ink/15 px-3 py-2" value={service} onChange={(e) => setService(e.target.value)}>
+          <select className={inputClass} value={service} onChange={(e) => setService(e.target.value)}>
             <option>General consultation</option>
             <option>Cleaning</option>
             <option>Filling</option>
@@ -87,7 +89,7 @@ export function BookingForm({ compact = false }) {
         </label>
         <label className="text-sm font-medium">
           Doctor
-          <select className="focus-ring mt-1 w-full rounded border border-ink/15 px-3 py-2" value={doctorId} onChange={(e) => setDoctorId(e.target.value)}>
+          <select className={inputClass} value={doctorId} onChange={(e) => setDoctorId(e.target.value)}>
             {doctors.map((doctor) => (
               <option key={doctor.id} value={doctor.id}>{doctor.name}</option>
             ))}
@@ -95,15 +97,15 @@ export function BookingForm({ compact = false }) {
         </label>
         <label className="text-sm font-medium">
           Date
-          <input className="focus-ring mt-1 w-full rounded border border-ink/15 px-3 py-2" type="date" value={date} min={today} onChange={(e) => setDate(e.target.value)} />
+          <input className={inputClass} type="date" value={date} min={today} onChange={(e) => setDate(e.target.value)} />
         </label>
         <label className="text-sm font-medium">
           Phone
-          <input className="focus-ring mt-1 w-full rounded border border-ink/15 px-3 py-2" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="9800000000" required />
+          <input className={inputClass} value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="9800000000" required />
         </label>
         <label className="text-sm font-medium sm:col-span-2">
           Patient name
-          <input className="focus-ring mt-1 w-full rounded border border-ink/15 px-3 py-2" value={patientName} onChange={(e) => setPatientName(e.target.value)} placeholder="Rahul Kumar" required />
+          <input className={inputClass} value={patientName} onChange={(e) => setPatientName(e.target.value)} placeholder="Rahul Kumar" required />
         </label>
       </div>
       <div className="mt-5">
@@ -113,8 +115,8 @@ export function BookingForm({ compact = false }) {
             <button
               type="button"
               key={slot.time}
-              className={`focus-ring rounded border px-3 py-2 text-sm font-semibold ${
-                selectedTime === slot.time ? "border-clinic bg-clinic text-white" : "border-ink/15 bg-white text-ink"
+              className={`focus-ring rounded-xl border px-3 py-2.5 text-sm font-semibold transition ${
+                selectedTime === slot.time ? "border-clinic bg-clinic text-white shadow-sm" : "border-ink/15 bg-paper text-ink hover:border-clinic/30 hover:bg-mint/50"
               }`}
               onClick={() => setSelectedTime(slot.time)}
             >
@@ -126,7 +128,7 @@ export function BookingForm({ compact = false }) {
       </div>
       {status && <p className="mt-4 rounded border border-coral/30 bg-coral/10 px-3 py-2 text-sm text-ink">{status}</p>}
       <button
-        className="focus-ring mt-5 inline-flex w-full items-center justify-center gap-2 rounded bg-clinic px-5 py-3 font-semibold text-white disabled:opacity-60"
+        className="focus-ring mt-5 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-clinic px-5 py-3.5 font-semibold text-white shadow-sm transition hover:bg-[#0d665f] disabled:cursor-not-allowed disabled:opacity-60"
         disabled={!selectedTime || loading}
       >
         {loading && <Loader2 className="animate-spin" size={18} />}

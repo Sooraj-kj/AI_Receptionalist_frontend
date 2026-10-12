@@ -1,14 +1,19 @@
 import Link from "next/link";
-import { ArrowRight, Clock, MapPin, ShieldCheck, Sparkles } from "lucide-react";
+import { ArrowRight, Baby, Clock, MapPin, ShieldCheck, Sparkles, Sparkle, Stethoscope, Syringe } from "lucide-react";
 import { BookingForm } from "@/components/BookingForm";
 import { ChatWidget } from "@/components/ChatWidget";
 import { Header } from "@/components/Header";
 
-const services = ["General consultation", "Cleaning", "Filling", "Orthodontic consultation"];
+const services = [
+  ["General consultation", "Routine checks and treatment planning.", Stethoscope],
+  ["Cleaning", "Scaling and polish visits.", Sparkle],
+  ["Filling", "Cavity assessment and care.", Syringe],
+  ["Orthodontic consultation", "Braces and aligner guidance.", Baby],
+];
 const doctors = [
-  ["Dr. Asha Menon", "General dentistry"],
-  ["Dr. Rahul Nair", "Orthodontics"],
-  ["Dr. Meera Iyer", "Pediatric dentistry"],
+  ["Dr. Asha Menon", "General dentistry", "A"],
+  ["Dr. Rahul Nair", "Orthodontics", "R"],
+  ["Dr. Meera Iyer", "Pediatric dentistry", "M"],
 ];
 
 export default function Home() {
@@ -58,23 +63,53 @@ export default function Home() {
           <p className="mt-2 text-sm leading-6 text-ink/65">The AI confirms appointments only after the FastAPI booking engine returns a real reference.</p>
         </div>
       </section>
-      <section className="mx-auto grid max-w-7xl gap-8 px-4 pb-16 sm:px-6 lg:grid-cols-2 lg:px-8">
+      <section className="mx-auto grid max-w-7xl gap-8 px-4 pb-16 sm:px-6 lg:grid-cols-[1fr_1.05fr] lg:px-8">
         <div>
-          <h2 className="text-2xl font-bold">Services</h2>
+          <div className="flex items-end justify-between gap-4">
+            <div>
+              <p className="text-sm font-semibold uppercase tracking-widest text-clinic">Care options</p>
+              <h2 className="mt-2 text-3xl font-bold">Services</h2>
+            </div>
+            <Link href="/services" className="focus-ring hidden items-center gap-2 rounded-full border border-ink/10 bg-white px-3 py-2 text-sm font-semibold text-ink/70 transition hover:border-clinic/30 hover:text-clinic sm:inline-flex">
+              View all
+              <ArrowRight size={15} />
+            </Link>
+          </div>
           <div className="mt-4 grid gap-3 sm:grid-cols-2">
-            {services.map((service) => (
-              <div key={service} className="rounded border border-ink/10 bg-white p-4 font-medium">{service}</div>
+            {services.map(([service, description, Icon]) => (
+              <Link key={service} href="/book" className="focus-ring group rounded-xl border border-ink/10 bg-white p-4 transition hover:-translate-y-0.5 hover:border-clinic/25 hover:shadow-soft">
+                <span className="mb-4 grid h-10 w-10 place-items-center rounded-lg bg-mint text-clinic transition group-hover:bg-clinic group-hover:text-white">
+                  <Icon size={19} />
+                </span>
+                <span className="block font-semibold">{service}</span>
+                <span className="mt-1 block text-sm leading-6 text-ink/60">{description}</span>
+              </Link>
             ))}
           </div>
         </div>
         <div>
-          <h2 className="text-2xl font-bold">Doctors</h2>
+          <div className="flex items-end justify-between gap-4">
+            <div>
+              <p className="text-sm font-semibold uppercase tracking-widest text-clinic">Clinical team</p>
+              <h2 className="mt-2 text-3xl font-bold">Doctors</h2>
+            </div>
+            <Link href="/doctors" className="focus-ring hidden items-center gap-2 rounded-full border border-ink/10 bg-white px-3 py-2 text-sm font-semibold text-ink/70 transition hover:border-clinic/30 hover:text-clinic sm:inline-flex">
+              Meet team
+              <ArrowRight size={15} />
+            </Link>
+          </div>
           <div className="mt-4 grid gap-3">
-            {doctors.map(([name, specialty]) => (
-              <div key={name} className="flex items-center justify-between rounded border border-ink/10 bg-white p-4">
-                <span className="font-medium">{name}</span>
-                <span className="text-sm text-ink/60">{specialty}</span>
-              </div>
+            {doctors.map(([name, specialty, initial]) => (
+              <Link key={name} href="/book" className="focus-ring group flex items-center justify-between gap-4 rounded-xl border border-ink/10 bg-white p-4 transition hover:-translate-y-0.5 hover:border-clinic/25 hover:shadow-soft">
+                <span className="flex min-w-0 items-center gap-3">
+                  <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-mint font-bold text-clinic transition group-hover:bg-clinic group-hover:text-white">{initial}</span>
+                  <span className="min-w-0">
+                    <span className="block truncate font-semibold">{name}</span>
+                    <span className="block truncate text-sm text-ink/60">{specialty}</span>
+                  </span>
+                </span>
+                <span className="hidden rounded-full bg-paper px-3 py-1 text-xs font-semibold text-clinic sm:inline-flex">Book</span>
+              </Link>
             ))}
           </div>
         </div>
